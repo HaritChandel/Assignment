@@ -6,47 +6,39 @@ import { setEvents } from "../redux/actions/EventActions";
 
 function Events() {
   const eventData = {
-    eventName: {
-      value: "",
-    },
-    eventType: {
-      value: "",
-    },
-    eventStartDate: {
-      value: new Date(),
-    },
-    eventEndDate: {
-      value: new Date(),
-    },
-    eventDesc: {
-      value: "",
-    },
-    eventhandleBy: {
-      value: "",
-    },
-    eventOrg: {
-      value: "",
-    },
-    eventsubType: {
-      value: "",
-    },
+    eventName: "",
+    eventType: "",
+    eventStartDate: new Date(),
+    eventEndDate: new Date(),
+    eventDesc: "",
+    eventhandleBy: "",
+    eventOrg: "",
+    eventsubType: "",
   };
   const [formData, setFormData] = useState(eventData);
   const dispatch = useDispatch();
 
-  function handleChange(value, eventname) {
-    console.log(value, eventname, "HandleChange");
-    let eventData = {
-      ...formData,
-    };
-    eventData[eventname] = value;
-    setFormData(eventData);
-  }
+  // function handleChange(value, eventname) {
+  //   console.log(value, eventname, "HandleChange");
+  //   let eventData = {
+  //     ...formData,
+  //   };
+  //   eventData[eventname] = value;
+  //   setFormData(eventData);
+  // }
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevProps) => ({
+      ...prevProps,
+      [name]: value,
+    }));
+  };
 
   function SubmitEvent(event) {
     event.preventDefault();
     dispatch(setEvents(formData));
-    setFormData(eventData)
+    setFormData(eventData);
   }
 
   return (
@@ -61,10 +53,13 @@ function Events() {
             <div class="form-group">
               <label>Event Name</label>
               <input
-                onChange={(e) => {
-                  handleChange(e.target.value, "eventName");
-                }}
-                value={formData.eventName.value}
+                // onChange={(e) => {
+                //   handleChange(e.target.value, "eventName");
+                // }}
+                placeholder="Event Name"
+                onChange={handleChange}
+                value={formData.eventName}
+                name="eventName"
                 class="form-control"
               ></input>
             </div>
@@ -73,10 +68,10 @@ function Events() {
             <div class="form-group">
               <label>Event Type</label>
               <select
-                onChange={(e) => {
-                  handleChange(e.target.value, "eventType");
-                }}
-                value={formData.eventType.value}
+                placeholder="Event Type"
+                onChange={handleChange}
+                value={formData.eventType}
+                name="eventType"
                 class="form-select"
               >
                 <option selected>Choose Event type</option>
@@ -92,21 +87,22 @@ function Events() {
             <div class="form-group">
               <label>Event Start Date</label>
               <DatePicker
-                onSelect={(e) => {
-                  handleChange(e, "eventStartDate");
-                }}
-                // selected={formData.eventStartDate.value}
+                onSelect={handleChange}
+                selected={formData.eventStartDate}
+                onChange={formData.eventStartDate}
+                name="eventStartDate"
               ></DatePicker>
             </div>
           </div>
           <div className="col-6">
             <div class="form-group">
+            <label>Event End Date</label>
+
               <DatePicker
-                onSelect={(e) => {
-                  console.log(e, "datePicker");
-                  handleChange(e, "eventEndDate");
-                }}
-                // selected={formData.eventEndDate.value}
+                onSelect={handleChange}
+                selected={formData.eventEndDate}
+                onChange={formData.eventEndDate}
+                name="eventEndDate"
               ></DatePicker>
             </div>
           </div>
@@ -114,10 +110,10 @@ function Events() {
             <div class="form-group">
               <label>Event Description</label>
               <input
-                onChange={(e) => {
-                  handleChange(e.target.value, "eventDesc");
-                }}
-                value={formData.eventDesc.value}
+                placeholder="Event Description"
+                onChange={handleChange}
+                value={formData.eventDesc}
+                name="eventDesc"
                 class="form-control"
               ></input>
             </div>
@@ -126,10 +122,10 @@ function Events() {
             <div class="form-group">
               <label>Event Handled by</label>
               <input
-                onChange={(e) => {
-                  handleChange(e.target.value, "eventhandleBy");
-                }}
-                value={formData.eventhandleBy.value}
+                placeholder="Event Handled by"
+                onChange={handleChange}
+                value={formData.eventhandleBy}
+                name="eventhandleBy"
                 class="form-control"
               ></input>
             </div>
@@ -139,10 +135,10 @@ function Events() {
               <label>Event Organisation</label>
 
               <input
-                onChange={(e) => {
-                  handleChange(e.target.value, "eventOrg");
-                }}
-                value={formData.eventOrg.value}
+                placeholder="Event Organisation"
+                onChange={handleChange}
+                value={formData.eventOrg}
+                name="eventOrg"
                 class="form-control"
               ></input>
             </div>
@@ -151,11 +147,11 @@ function Events() {
             <div class="form-group">
               <label>Total Sub Events</label>
               <input
-                onChange={(e) => {
-                  handleChange(e.target.value, "eventsubType");
-                }}
                 class="form-control"
-                value={formData.eventsubType.value}
+                placeholder="Event Sub Events"
+                onChange={handleChange}
+                value={formData.eventsubType}
+                name="eventsubType"
               ></input>
             </div>
           </div>
